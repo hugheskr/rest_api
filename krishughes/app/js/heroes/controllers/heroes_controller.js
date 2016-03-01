@@ -1,11 +1,12 @@
 var angular = require('angular');
 
 module.exports = function(app) {
-  app.controller('HeroesController', ['$scope', '$http', 'cfResource',
-    function($scope, $http, Resource) {
+  app.controller('HeroesController', ['$scope', '$http', 'cfResource', 'bResource',
+    function($scope, $http, Resource, BResource) {
 
       $scope.heroes = [];
       var heroService = Resource('/heroes');
+      var battleService = BResource();
 
       $scope.toggleEdit = function(hero) {
         if (hero.backup) {

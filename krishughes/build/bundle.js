@@ -53,6 +53,7 @@
 	__webpack_require__(5)(supersApp);
 	__webpack_require__(7)(supersApp);
 	__webpack_require__(9)(supersApp);
+	__webpack_require__(11)(supersApp);
 
 
 /***/ },
@@ -30688,6 +30689,38 @@
 
 /***/ },
 /* 9 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = function(app) {
+		__webpack_require__(10)(app);
+	};
+
+
+/***/ },
+/* 10 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var angular = __webpack_require__(1);
+
+	module.exports = function(app) {
+	  app.controller('BattleController', ['$scope', '$http', 'cfResource',
+	    function($scope, $http, Resource) {
+
+	      var battleService = Resource('/battle');
+	      $scope.results = '';
+
+	      $scope.getBattle = function() {
+	        battleService.getAll(function(err, res) {
+	          if (err) return console.log(err);
+	          $scope.results = res;
+	        });
+	      };
+	  }]);
+	}
+
+
+/***/ },
+/* 11 */
 /***/ function(module, exports) {
 
 	module.exports = function(app) {

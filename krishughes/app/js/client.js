@@ -6,4 +6,5 @@ require('./services')(supersApp);
 
 require('./heroes')(supersApp);
 require('./villains')(supersApp);
+require('./battle')(supersApp);
 require('./directives/form_directive')(supersApp);
