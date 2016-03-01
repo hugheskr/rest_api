@@ -1,7 +1,8 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var Hero = require(__dirname + '/../models/hero');
-var handleError = require(__dirname + '/../lib/handleServerError');
+var handleError = require(__dirname + '/../lib/handle_server_error');
+var jwtAuth = require(__dirname + '/../lib/jwt_auth');
 
 var heroesRouter = module.exports = exports = express.Router();
 
@@ -38,3 +39,5 @@ heroesRouter.delete('/heroes/:id', function(req, res) {
     res.json({msg: 'success'});
   });
 });
+
+

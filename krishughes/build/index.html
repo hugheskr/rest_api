@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/stylin.css">
+	<meta charset="UTF-8">
+	<title>Heroes and Villains</title>
+</head>
+<body data-ng-app="supersApp" ng-cloak>
+  <section class="wrapper">
+    <header>
+      <h1>Heroes vs Villains</h1>
+    </header>
+    <aside class="left"></aside>
+    <main>
+      <section class="heroes" data-ng-controller="HeroesController" data-ng-init=" getAllHeroes()">
+ 		    <h2 class="titles">Hero List</h2>
+ 		    <h3>Modify and Delete Heroes</h3>
+          <ul>
+            <li data-ng-repeat="hero in heroes">Name: {{hero.name}}, Level: {{hero.level}}
+              <button class="deleteButton" data-ng-click="deleteHero(hero)">
+                Delete
+              </button>
+              <button class="editButton" data-ng-if="!hero.editing" data-ng-click="toggleEdit(hero)">Edit</button>
+              <supers-form
+                data-ng-if="hero.editing"
+                data-super="hero"
+                data-save="updateHero(hero)"
+                data-button-text="Update Hero">
+                <button
+                  type="button"
+                  class="cancelButton"
+                  data-ng-click="toggleEdit(hero)"
+                >Cancel
+                </button>
+              </supers-form>
+            </li>
+          </ul>
+
+        <h3>Create A Hero</h3>
+        <supers-form
+          class="create"
+          data-super="super"
+          data-save="createHero(super)"
+          data-button-text="Create Hero">
+        </supers-form>
+        <footer>
+          <h5>Hero Data</h5>
+          <p>{{heroes}}</p>
+        </footer>
+      </section>
+
+      <section class="battle">
+        <h2>Battle Box</h2>
+      </section>
+
+      <section class="villains" data-ng-controller="VillainsController" data-ng-init="getAllVillains()">
+        <h2 class="titles">Villain List</h2>
+		    <section class="padding">
+          <h3>Modify and Delete Villains</h3>
+          <ul>
+            <li data-ng-repeat="villain in villains">Name: {{villain.name}}, Level: {{villain.level}}
+              <button class="deleteButton" data-ng-click="deleteVillain(villain)">
+                Delete
+              </button>
+              <button
+                class="editButton"
+                data-ng-if="!villain.editing"
+                data-ng-click="toggleEdit(villain)"
+                >Edit
+              </button>
+              <supers-form
+                data-ng-if="villain.editing"
+                data-super="villain"
+                data-save="updateVillain(villain)"
+                data-button-text="Update Villain">
+                <button
+                  type="button"
+                  class="cancelButton"
+                  data-ng-click="toggleEdit(villain)"
+                  >Cancel
+                </button>
+              </supers-form>
+            </li>
+          </ul>
+
+          <h3>Create A Villain</h3>
+          <supers-form
+            class="create"
+            data-super="super"
+            data-save="createVillain(super)"
+            data-button-text="Create Villain">
+          </supers-form>
+          <footer>
+            <h5>Villain Data</h5>
+            <p>{{villains}}</p>
+          </footer>
+        </section>
+	    </section>
+	  </main>
+    <aside class="right"></aside>
+    <footer class="foot"></footer>
+  </section>
+  <script src="bundle.js"></script>
+</body>
+</html>
