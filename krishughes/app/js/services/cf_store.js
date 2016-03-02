@@ -7,7 +7,7 @@ module.exports = function(app) {
       },
       set: function(key, value) {
         data[key] = value;
-        return value
+        return value;
       }
     };
   });

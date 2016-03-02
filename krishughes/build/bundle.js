@@ -45,6 +45,7 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	const angular = __webpack_require__(1);
+	//require('angular-route');
 	const supersApp = angular.module('supersApp', []);
 	__webpack_require__(3)(supersApp);
 
@@ -52,7 +53,13 @@
 
 	__webpack_require__(5)(supersApp);
 	__webpack_require__(7)(supersApp);
-	__webpack_require__(9)(supersApp);
+
+	// supersApp.config(['$routeProvider', function(routes) {
+	//   routes
+	//     .when('/home', {
+	//     	controller: ''
+	//     })
+	// }]);
 
 
 /***/ },
@@ -30572,48 +30579,56 @@
 	var angular = __webpack_require__(1);
 
 	module.exports = function(app) {
-	  app.controller('HeroesController', ['$scope', '$http', 'cfResource',
+	  app.controller('CharactersController', ['$scope', '$http', 'cfResource',
 	    function($scope, $http, Resource) {
 
 	      $scope.heroes = [];
-	      var heroService = Resource('/heroes');
+	      $scope.villains = [];
+	      $scope.heroService = Resource('/heroes');
+	      $scope.villainService = Resource('/villains');
 
-	      $scope.toggleEdit = function(hero) {
-	        if (hero.backup) {
-	          var temp = hero.backup;
-	          $scope.heroes.splice($scope.heroes.indexOf(hero), 1, temp);
+	      $scope.toggleEdit = function(character, list) {
+	        if (character.backup) {
+	          var temp = character.backup;
+	          list.splice(list.indexOf(character), 1, temp);
 	        } else {
-	          hero.backup = angular.copy(hero);
-	          hero.editing = true;
+	          character.backup = angular.copy(character);
+	          character.editing = true;
 	        }
 	      };
 
-	      $scope.getAllHeroes = function() {
-	        heroService.getAll(function(err, res) {
+	      $scope.getAllCharacters = function(service, list) {
+	        service.getAll(function(err, res) {
 	          if (err) return console.log(err);
-	          $scope.heroes = res;
+	          if(list === $scope.heroes) {
+	            $scope.heroes = res;
+	          }
+	          if(list === $scope.villains) {
+	            $scope.villains = res;
+	          }
 	        });
 	      };
 
-	      $scope.createHero = function(hero) {
-	        heroService.create(hero, function(err, res) {
+	      $scope.createCharacter = function(character, service, list) {
+	        service.create(character, function(err, res) {
 	          if (err) return console.log(err);
-	          $scope.heroes.push(res);
-	          $scope.super = null;
+	          list.push(res);
+	          character.level = null;
+	          character.name = null;
 	        });
 	      };
 
-	      $scope.deleteHero = function(hero) {
-	        heroService.delete(hero, function(err, res) {
+	      $scope.deleteCharacter = function(character, service, list) {
+	        service.delete(character, function(err, res) {
 	          if (err) return console.log(err);
-	          $scope.heroes.splice($scope.heroes.indexOf(hero), 1);
+	          list.splice(list.indexOf(character), 1);
 	        });
 	      };
 
-	      $scope.updateHero = function(hero) {
-	        heroService.update(hero, function(err, res) {
-	          hero.editing = false;
-	          hero.backup = null;
+	      $scope.updateCharacter = function(character, service) {
+	        service.update(character, function(err, res) {
+	          character.editing = false;
+	          character.backup = null;
 	          if (err) return console.log(err);
 	        });
 	      };
@@ -30623,88 +30638,21 @@
 
 /***/ },
 /* 7 */
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = function(app) {
-		__webpack_require__(8)(app);
-	};
-
-
-/***/ },
-/* 8 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var angular = __webpack_require__(1);
-
-	module.exports = function(app) {
-	  app.controller('VillainsController', ['$scope', '$http', 'cfResource',
-	    function($scope, $http, Resource) {
-
-	      $scope.villains = [];
-	      var villainService = Resource('/villains');
-
-	      $scope.toggleEdit = function(villain) {
-	        if (villain.backup) {
-	          var temp = villain.backup;
-	          $scope.villains.splice($scope.villains.indexOf(villain), 1, temp);
-	        } else {
-	          villain.backup = angular.copy(villain);
-	          villain.editing = true;
-	        }
-	      };
-
-	      $scope.getAllVillains = function() {
-	        villainService.getAll(function(err, res) {
-	          if (err) return console.log(err);
-	          $scope.villains = res;
-	        });
-	      };
-
-	      $scope.createVillain = function(villain) {
-	        villainService.create(villain, function(err, res) {
-	          if (err) return console.log(err);
-	          $scope.villains.push(res);
-	          $scope.super = null;
-	        });
-	      };
-
-	      $scope.deleteVillain = function(villain) {
-	        villainService.delete(villain, function(err, res) {
-	          if (err) return console.log(err);
-	          $scope.villains.splice($scope.villains.indexOf(villain), 1);
-	        });
-	      };
-
-	      $scope.updateVillain = function(villain) {
-	        villainService.update(villain, function(err, res) {
-	          villain.editing = false;
-	          villain.backup = null;
-	          if (err) return console.log(err);
-	        });
-	      };
-	  }]);
-	}
-
-
-/***/ },
-/* 9 */
 /***/ function(module, exports) {
 
 	module.exports = function(app) {
-	  app.directive('supersForm', function() {
+	  app.directive('charactersForm', function() {
 	    return {
 	    	restrict: 'EAC',
 	      replace: true,
 	      transclude: true,
-	      templateUrl: '/templates/supers/directives/form_directive.html',
+	      templateUrl: '/templates/characters/directives/form_directive.html',
 	      scope: {
 	    	  buttonText: '@',
 	    	  super: '=',
 	    	  save: '&'
-	    	}
-	      // controller: function($scope) {
-	      //   $scope.hero = $scope.hero || {};
-	      // }
+	    	},
+	      controller: 'CharactersController'
 	    };
 	  });
 	};

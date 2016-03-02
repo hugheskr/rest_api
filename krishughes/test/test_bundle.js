@@ -45,12 +45,11 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	__webpack_require__(1);
-	__webpack_require__(11);
+	__webpack_require__(9);
 
+	__webpack_require__(10);
+	__webpack_require__(11);
 	__webpack_require__(12);
-	__webpack_require__(13);
-	__webpack_require__(14);
-	__webpack_require__(15);
 
 
 /***/ },
@@ -58,6 +57,7 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	const angular = __webpack_require__(2);
+	//require('angular-route');
 	const supersApp = angular.module('supersApp', []);
 	__webpack_require__(4)(supersApp);
 
@@ -65,7 +65,13 @@
 
 	__webpack_require__(6)(supersApp);
 	__webpack_require__(8)(supersApp);
-	__webpack_require__(10)(supersApp);
+
+	// supersApp.config(['$routeProvider', function(routes) {
+	//   routes
+	//     .when('/home', {
+	//     	controller: ''
+	//     })
+	// }]);
 
 
 /***/ },
@@ -30585,48 +30591,56 @@
 	var angular = __webpack_require__(2);
 
 	module.exports = function(app) {
-	  app.controller('HeroesController', ['$scope', '$http', 'cfResource',
+	  app.controller('CharactersController', ['$scope', '$http', 'cfResource',
 	    function($scope, $http, Resource) {
 
 	      $scope.heroes = [];
-	      var heroService = Resource('/heroes');
+	      $scope.villains = [];
+	      $scope.heroService = Resource('/heroes');
+	      $scope.villainService = Resource('/villains');
 
-	      $scope.toggleEdit = function(hero) {
-	        if (hero.backup) {
-	          var temp = hero.backup;
-	          $scope.heroes.splice($scope.heroes.indexOf(hero), 1, temp);
+	      $scope.toggleEdit = function(character, list) {
+	        if (character.backup) {
+	          var temp = character.backup;
+	          list.splice(list.indexOf(character), 1, temp);
 	        } else {
-	          hero.backup = angular.copy(hero);
-	          hero.editing = true;
+	          character.backup = angular.copy(character);
+	          character.editing = true;
 	        }
 	      };
 
-	      $scope.getAllHeroes = function() {
-	        heroService.getAll(function(err, res) {
+	      $scope.getAllCharacters = function(service, list) {
+	        service.getAll(function(err, res) {
 	          if (err) return console.log(err);
-	          $scope.heroes = res;
+	          if(list === $scope.heroes) {
+	            $scope.heroes = res;
+	          }
+	          if(list === $scope.villains) {
+	            $scope.villains = res;
+	          }
 	        });
 	      };
 
-	      $scope.createHero = function(hero) {
-	        heroService.create(hero, function(err, res) {
+	      $scope.createCharacter = function(character, service, list) {
+	        service.create(character, function(err, res) {
 	          if (err) return console.log(err);
-	          $scope.heroes.push(res);
-	          $scope.super = null;
+	          list.push(res);
+	          character.level = null;
+	          character.name = null;
 	        });
 	      };
 
-	      $scope.deleteHero = function(hero) {
-	        heroService.delete(hero, function(err, res) {
+	      $scope.deleteCharacter = function(character, service, list) {
+	        service.delete(character, function(err, res) {
 	          if (err) return console.log(err);
-	          $scope.heroes.splice($scope.heroes.indexOf(hero), 1);
+	          list.splice(list.indexOf(character), 1);
 	        });
 	      };
 
-	      $scope.updateHero = function(hero) {
-	        heroService.update(hero, function(err, res) {
-	          hero.editing = false;
-	          hero.backup = null;
+	      $scope.updateCharacter = function(character, service) {
+	        service.update(character, function(err, res) {
+	          character.editing = false;
+	          character.backup = null;
 	          if (err) return console.log(err);
 	        });
 	      };
@@ -30636,95 +30650,28 @@
 
 /***/ },
 /* 8 */
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = function(app) {
-		__webpack_require__(9)(app);
-	};
-
-
-/***/ },
-/* 9 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var angular = __webpack_require__(2);
-
-	module.exports = function(app) {
-	  app.controller('VillainsController', ['$scope', '$http', 'cfResource',
-	    function($scope, $http, Resource) {
-
-	      $scope.villains = [];
-	      var villainService = Resource('/villains');
-
-	      $scope.toggleEdit = function(villain) {
-	        if (villain.backup) {
-	          var temp = villain.backup;
-	          $scope.villains.splice($scope.villains.indexOf(villain), 1, temp);
-	        } else {
-	          villain.backup = angular.copy(villain);
-	          villain.editing = true;
-	        }
-	      };
-
-	      $scope.getAllVillains = function() {
-	        villainService.getAll(function(err, res) {
-	          if (err) return console.log(err);
-	          $scope.villains = res;
-	        });
-	      };
-
-	      $scope.createVillain = function(villain) {
-	        villainService.create(villain, function(err, res) {
-	          if (err) return console.log(err);
-	          $scope.villains.push(res);
-	          $scope.super = null;
-	        });
-	      };
-
-	      $scope.deleteVillain = function(villain) {
-	        villainService.delete(villain, function(err, res) {
-	          if (err) return console.log(err);
-	          $scope.villains.splice($scope.villains.indexOf(villain), 1);
-	        });
-	      };
-
-	      $scope.updateVillain = function(villain) {
-	        villainService.update(villain, function(err, res) {
-	          villain.editing = false;
-	          villain.backup = null;
-	          if (err) return console.log(err);
-	        });
-	      };
-	  }]);
-	}
-
-
-/***/ },
-/* 10 */
 /***/ function(module, exports) {
 
 	module.exports = function(app) {
-	  app.directive('supersForm', function() {
+	  app.directive('charactersForm', function() {
 	    return {
 	    	restrict: 'EAC',
 	      replace: true,
 	      transclude: true,
-	      templateUrl: '/templates/supers/directives/form_directive.html',
+	      templateUrl: '/templates/characters/directives/form_directive.html',
 	      scope: {
 	    	  buttonText: '@',
 	    	  super: '=',
 	    	  save: '&'
-	    	}
-	      // controller: function($scope) {
-	      //   $scope.hero = $scope.hero || {};
-	      // }
+	    	},
+	      controller: 'CharactersController'
 	    };
 	  });
 	};
 
 
 /***/ },
-/* 11 */
+/* 9 */
 /***/ function(module, exports) {
 
 	/**
@@ -33572,12 +33519,12 @@
 
 
 /***/ },
-/* 12 */
+/* 10 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var angular = __webpack_require__(2);
 
-	describe('HeroesController', () => {
+	describe('CharactersController', () => {
 	  var $httpBackend;
 	  var $scope;
 	  var $ControllerConstructor;
@@ -33590,16 +33537,17 @@
 	  }));
 
 	  it('should be able to make a controller', () => {
-	    var heroesController = $ControllerConstructor('HeroesController', {$scope});
-	    expect(typeof heroesController).toBe('object');
+	    var charactersController = $ControllerConstructor('CharactersController', {$scope});
+	    expect(typeof charactersController).toBe('object');
 	    expect(Array.isArray($scope.heroes)).toBe(true);
-	    expect(typeof $scope.getAllHeroes).toBe('function');
+	    expect(Array.isArray($scope.villains)).toBe(true);
+	    expect(typeof $scope.getAllCharacters).toBe('function');
 	  });
 
 	  describe('REST requests', () => {
 	    beforeEach(angular.mock.inject(function(_$httpBackend_) {
 	      $httpBackend = _$httpBackend_;
-	      $ControllerConstructor('HeroesController', {$scope});
+	      $ControllerConstructor('CharactersController', {$scope});
 	    }));
 
 	    afterEach(() => {
@@ -33610,7 +33558,7 @@
 	    //Hero Get
 	    it('should make a get request to /api/heroes', () => {
 	      $httpBackend.expectGET('http://localhost:3000/api/heroes').respond(200, [{name: 'test hero'}]);
-	      $scope.getAllHeroes();
+	      $scope.getAllCharacters(null, heroes);
 	      $httpBackend.flush();
 	      expect($scope.heroes.length).toBe(1);
 	      expect($scope.heroes[0].name).toBe('test hero');
@@ -33621,7 +33569,7 @@
 	      $httpBackend.expectPOST('http://localhost:3000/api/heroes', {name: 'the sent hero'}).respond(200,
 	      	{name: 'the response hero'});
 	      $scope.super = {name: 'the new hero'};
-	      $scope.createHero({name: 'the sent hero'});
+	      $scope.createCharacter({name: 'the sent hero'}, null, heroes);
 	      $httpBackend.flush();
 	      expect($scope.heroes.length).toBe(1);
 	      expect($scope.super).toBe(null);
@@ -33634,7 +33582,7 @@
 	      $scope.heroes.push(hero);
 	      expect($scope.heroes.indexOf(hero)).not.toBe(-1);
 	      $httpBackend.expectPUT('http://localhost:3000/api/heroes/1', hero).respond(200);
-	      $scope.updateHero(hero);
+	      $scope.updateCharacer(hero);
 	      $httpBackend.flush();
 	      expect($scope.heroes.length).toBe(1);
 	      expect($scope.heroes[0].editing).toBe(false);
@@ -33648,7 +33596,7 @@
 	      expect($scope.heroes.length).toBe(1);
 	      expect($scope.heroes.indexOf(hero)).not.toBe(-1);
 	      $httpBackend.expectDELETE('http://localhost:3000/api/heroes/1').respond(200);
-	      $scope.deleteHero(hero);
+	      $scope.deleteCharacter(hero, null, heroes);
 	      $httpBackend.flush();
 	      expect($scope.heroes.length).toBe(0);
 	      expect($scope.heroes.indexOf(hero)).toBe(-1);
@@ -33658,93 +33606,7 @@
 
 
 /***/ },
-/* 13 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var angular = __webpack_require__(2);
-
-	describe('VillainsController', () => {
-	  var $httpBackend;
-	  var $scope;
-	  var $ControllerConstructor;
-
-	  beforeEach(angular.mock.module('supersApp'));
-
-	  beforeEach(angular.mock.inject(function($rootScope, $controller) {
-	    $ControllerConstructor = $controller;
-	    $scope = $rootScope.$new();
-	  }));
-
-	  it('should be able to make a controller', () => {
-	    var villainsController = $ControllerConstructor('VillainsController', {$scope});
-	    expect(typeof villainsController).toBe('object');
-	    expect(Array.isArray($scope.villains)).toBe(true);
-	    expect(typeof $scope.getAllVillains).toBe('function');
-	  });
-
-	  describe('REST requests', () => {
-	    beforeEach(angular.mock.inject(function(_$httpBackend_) {
-	      $httpBackend = _$httpBackend_;
-	      $ControllerConstructor('VillainsController', {$scope});
-	    }));
-
-	    afterEach(() => {
-	      $httpBackend.verifyNoOutstandingExpectation();
-	      $httpBackend.verifyNoOutstandingRequest();
-	    });
-
-	    //Villain Get
-	    it('should make a get request to /api/villains', () => {
-	      $httpBackend.expectGET('http://localhost:3000/api/villains').respond(200, [{name: 'test villain'}]);
-	      $scope.getAllVillains();
-	      $httpBackend.flush();
-	      expect($scope.villains.length).toBe(1);
-	      expect($scope.villains[0].name).toBe('test villain');
-	    });
-
-	    //Villain Post
-	    it('should create a new villain', () => {
-	      $httpBackend.expectPOST('http://localhost:3000/api/villains', {name: 'the sent villain'})
-	        .respond(200, {name: 'the response villain'});
-	      $scope.super = {name: 'the new villain'};
-	      $scope.createVillain({name: 'the sent villain'});
-	      $httpBackend.flush();
-	      expect($scope.villains.length).toBe(1);
-	      expect($scope.super).toBe(null);
-	      expect($scope.villains[0].name).toBe('the response villain');
-	    });
-
-	    //Villain Put
-	    it('should make an update put request to /api/villains', () => {
-	      var villain = {_id: 1, name: 'update villain', editing: true};
-	      $scope.villains.push(villain);
-	      expect($scope.villains.indexOf(villain)).not.toBe(-1);
-	      $httpBackend.expectPUT('http://localhost:3000/api/villains/1', villain).respond(200);
-	      $scope.updateVillain(villain);
-	      $httpBackend.flush();
-	      expect($scope.villains.length).toBe(1);
-	      expect($scope.villains[0].editing).toBe(false);
-	      expect(villain.editing).toBe(false);
-	    });
-
-	    //Villain Delete
-	    it('should make a delete to /api/villains', () => {
-	      var villain = {_id: 1, name: 'delete villain'};
-	      $scope.villains.push(villain);
-	      expect($scope.villains.length).toBe(1);
-	      expect($scope.villains.indexOf(villain)).not.toBe(-1);
-	      $httpBackend.expectDELETE('http://localhost:3000/api/villains/1').respond(200);
-	      $scope.deleteVillain(villain);
-	      $httpBackend.flush();
-	      expect($scope.villains.length).toBe(0);
-	      expect($scope.villains.indexOf(villain)).toBe(-1);
-	    });
-	  });
-	});
-
-
-/***/ },
-/* 14 */
+/* 11 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var angular = __webpack_require__(2);
@@ -33830,11 +33692,11 @@
 
 
 /***/ },
-/* 15 */
+/* 12 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var angular = __webpack_require__(2);
-	var template = __webpack_require__(16);
+	var template = __webpack_require__(13);
 
 	describe('form directive', () => {
 	  var $compile;
@@ -33850,9 +33712,9 @@
 	  }));
 
 	  it('should load the directive', () => {
-	    $httpBackend.when('GET', '/templates/supers/directives/form_directive.html').respond(200, template);
+	    $httpBackend.when('GET', '/templates/characters/directives/form_directive.html').respond(200, template);
 
-	    var element = $compile('<supers-form data-hero="{}" data-button-text="test button"></supers-form>')($rootScope);
+	    var element = $compile('<characters-form data-hero="{}" data-button-text="test button"></supers-form>')($rootScope);
 	    $httpBackend.flush();
 	    $rootScope.$digest();
 	    expect(element.html()).toContain('test button');
@@ -33860,7 +33722,7 @@
 
 	  it('should be able to call a passed save function', () => {
 	    var scope = $rootScope.$new();
-	    $httpBackend.when('GET', '/templates/supers/directives/form_directive.html').respond(200, template);
+	    $httpBackend.when('GET', '/templates/characters/directives/form_directive.html').respond(200, template);
 	    var called = false;
 	    scope.super = {name: 'inside scope'};
 
@@ -33870,7 +33732,7 @@
 	      called = true;
 	    };
 
-	    var element = $compile('<supers-form data-super="{name: \'inside directive\'}" data-save=testSave></supers-form>')(scope);
+	    var element = $compile('<characters-form data-super="{name: \'inside directive\'}" data-save=testSave></supers-form>')(scope);
 	    $httpBackend.flush();
 	    $rootScope.$digest();
 
@@ -33882,7 +33744,7 @@
 
 
 /***/ },
-/* 16 */
+/* 13 */
 /***/ function(module, exports) {
 
 	module.exports = "<form data-ng-submit=\"save(super)\">\n\t<input type=\"text\" name=\"name\" placeholder=\"Name\" data-ng-model=\"super.name\">\n\n\t<input type=\"text\" placeholder=\"Level\" data-ng-model=\"super.level\">\n\n\t<ng-transclude></ng-transclude>\n\t<button class=\"submitButton\" type=\"submit\">{{buttonText}}</button>\n</form>\n";

@@ -1,5 +1,5 @@
 var angular = require('angular');
-var template = require('../app/templates/supers/directives/form_directive.html');
+var template = require('../app/templates/characters/directives/form_directive.html');
 
 describe('form directive', () => {
   var $compile;
@@ -15,9 +15,9 @@ describe('form directive', () => {
   }));
 
   it('should load the directive', () => {
-    $httpBackend.when('GET', '/templates/supers/directives/form_directive.html').respond(200, template);
+    $httpBackend.when('GET', '/templates/characters/directives/form_directive.html').respond(200, template);
 
-    var element = $compile('<supers-form data-hero="{}" data-button-text="test button"></supers-form>')($rootScope);
+    var element = $compile('<characters-form data-hero="{}" data-button-text="test button"></supers-form>')($rootScope);
     $httpBackend.flush();
     $rootScope.$digest();
     expect(element.html()).toContain('test button');
@@ -25,7 +25,7 @@ describe('form directive', () => {
 
   it('should be able to call a passed save function', () => {
     var scope = $rootScope.$new();
-    $httpBackend.when('GET', '/templates/supers/directives/form_directive.html').respond(200, template);
+    $httpBackend.when('GET', '/templates/characters/directives/form_directive.html').respond(200, template);
     var called = false;
     scope.super = {name: 'inside scope'};
 
@@ -35,7 +35,7 @@ describe('form directive', () => {
       called = true;
     };
 
-    var element = $compile('<supers-form data-super="{name: \'inside directive\'}" data-save=testSave></supers-form>')(scope);
+    var element = $compile('<characters-form data-super="{name: \'inside directive\'}" data-save=testSave></supers-form>')(scope);
     $httpBackend.flush();
     $rootScope.$digest();
 
