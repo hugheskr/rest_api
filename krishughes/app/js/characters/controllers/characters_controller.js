@@ -8,6 +8,11 @@ module.exports = function(app) {
       $scope.villains = [];
       $scope.heroService = Resource('/heroes');
       $scope.villainService = Resource('/villains');
+      $scope.errors = [];
+
+      $scope.dismissError = function(err) {
+        $scope.errors.splice($scope.errors.indexOf(err), 1);
+      };
 
       $scope.toggleEdit = function(character, list) {
         if (character.backup) {
@@ -33,7 +38,10 @@ module.exports = function(app) {
 
       $scope.createCharacter = function(character, service, list) {
         service.create(character, function(err, res) {
-          if (err) return console.log(err);
+          if (err) {
+            $scope.errors.push('Please signin. Could not save "' + character.name + '"');
+            return console.log(err);
+          }
           list.push(res);
           character.level = null;
           character.name = null;
@@ -42,16 +50,22 @@ module.exports = function(app) {
 
       $scope.deleteCharacter = function(character, service, list) {
         service.delete(character, function(err, res) {
-          if (err) return console.log(err);
+          if (err) {
+            $scope.errors.push('Please signin. Could not delete "' + character.name +'"');
+            return console.log(err);
+          }
           list.splice(list.indexOf(character), 1);
         });
       };
 
       $scope.updateCharacter = function(character, service) {
         service.update(character, function(err, res) {
+          if (err) {
+            $scope.errors.push('Please signin. Could not update character "' + character.name + '"');
+            return console.log(err);
+          }
           character.editing = false;
           character.backup = null;
-          if (err) return console.log(err);
         });
       };
   }]);

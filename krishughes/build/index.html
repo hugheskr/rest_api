@@ -6,100 +6,21 @@
 	<title>Heroes and Villains</title>
 </head>
 <body data-ng-app="supersApp" ng-cloak>
-  <section class="wrapper">
-    <header>
-      <h1>Heroes vs Villains</h1>
-    </header>
-    <aside class="left"></aside>
-    <main data-ng-controller="CharactersController">
-      <section class="heroes" data-ng-init=" getAllCharacters(heroService, heroes)">
- 		    <h2 class="titles">Hero List</h2>
- 		    <h3>Modify and Delete Heroes</h3>
-          <ul>
-            <li data-ng-repeat="hero in heroes">Name: {{hero.name}}, Level: {{hero.level}}
-              <button class="deleteButton" data-ng-click="deleteCharacter(hero, heroService, heroes)">
-                Delete
-              </button>
-              <button class="editButton" data-ng-if="!hero.editing" data-ng-click="toggleEdit(hero, heroes)">Edit</button>
-              <characters-form
-                data-ng-if="hero.editing"
-                data-super="hero"
-                data-save="updateCharacter(hero, heroService)"
-                data-button-text="Update Hero">
-                <button
-                  type="button"
-                  class="cancelButton"
-                  data-ng-click="toggleEdit(hero, heroes)"
-                >Cancel
-                </button>
-              </characters-form>
-            </li>
-          </ul>
-
-        <h3>Create A Hero</h3>
-        <characters-form
-          class="create"
-          data-super="superH"
-          data-save="createCharacter(superH, heroService, heroes)"
-          data-button-text="Create Hero">
-        </characters-form>
-        <footer>
-          <h5>Hero Data</h5>
-          <p>{{heroes}}</p>
-        </footer>
-      </section>
-
-      <section class="battle">
-        <h2>Battle Box</h2>
-      </section>
-
-      <section class="villains" data-ng-init="getAllCharacters(villainService, villains)">
-        <h2 class="titles">Villain List</h2>
-		    <section class="padding">
-          <h3>Modify and Delete Villains</h3>
-          <ul>
-            <li data-ng-repeat="villain in villains">Name: {{villain.name}}, Level: {{villain.level}}
-              <button class="deleteButton" data-ng-click="deleteCharacter(villain, villainService, villains)">
-                Delete
-              </button>
-              <button
-                class="editButton"
-                data-ng-if="!villain.editing"
-                data-ng-click="toggleEdit(villain, villains)"
-                >Edit
-              </button>
-              <characters-form
-                data-ng-if="villain.editing"
-                data-super="villain"
-                data-save="updateCharacter(villain, villainService)"
-                data-button-text="Update Villain">
-                <button
-                  type="button"
-                  class="cancelButton"
-                  data-ng-click="toggleEdit(villain, villains)"
-                  >Cancel
-                </button>
-              </characters-form>
-            </li>
-          </ul>
-
-          <h3>Create A Villain</h3>
-          <characters-form
-            class="create"
-            data-super="superV"
-            data-save="createCharacter(superV, villainService, villains)"
-            data-button-text="Create Villain">
-          </characters-form>
-          <footer>
-            <h5>Villain Data</h5>
-            <p>{{villains}}</p>
-          </footer>
-        </section>
-	    </section>
-	  </main>
-    <aside class="right"></aside>
-    <footer class="foot"></footer>
-  </section>
+	<div data-ng-controller="authController" data-ng-init="updateUsername()">
+	  <nav class="greet">
+		  <p data-ng-if="!username">
+        <a href data-ng-click='signInView()'>SIGN IN</a>
+        -
+        <a href data-ng-click='signUpView()'>SIGN UP</a>
+        Please sign in to create, edit, or delete characters.
+		  </p>
+		  <p data-ng-if="username">
+		    Hello {{username}}!
+		    <a href data-ng-click="logOut()">LOG OUT</a>
+		  </p>
+	  </nav>
+    <section data-ng-view></section>
+  </div>
   <script src="bundle.js"></script>
 </body>
 </html>

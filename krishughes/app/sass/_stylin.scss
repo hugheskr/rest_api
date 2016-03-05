@@ -12,11 +12,23 @@ $green: #4CAF50;
   display: none !important;
 }
 
+.greet {
+  height: 30px;
+  p{
+    font-size: 25px;
+    font-weight: bold;
+    color: $green;
+  }
+  a {
+    font-size: 15px;
+  }
+}
+
 header {
   height: 40px;
   width: 100%;
   color: white;
-  background-color: #008CBA;
+  background-color: $blue;
   margin: 0;
   h1 {
     font-size: 35px;
@@ -57,7 +69,7 @@ button {
   background-color: $blue;
 }
 
-.submitButton {
+.submitButton, .sign {
   background-color: $green;
 }
 
@@ -73,6 +85,10 @@ li {
 input {
   margin-left: 2px;
   width: 175px;
+}
+
+.errors {
+  padding-left: 2px;
 }
 
 .name {

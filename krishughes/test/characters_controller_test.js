@@ -34,7 +34,7 @@ describe('CharactersController', () => {
     //Hero Get
     it('should make a get request to /api/heroes', () => {
       $httpBackend.expectGET('http://localhost:3000/api/heroes').respond(200, [{name: 'test hero'}]);
-      $scope.getAllCharacters(null, heroes);
+      $scope.getAllCharacters($scope.heroService, $scope.heroes);
       $httpBackend.flush();
       expect($scope.heroes.length).toBe(1);
       expect($scope.heroes[0].name).toBe('test hero');
@@ -45,10 +45,11 @@ describe('CharactersController', () => {
       $httpBackend.expectPOST('http://localhost:3000/api/heroes', {name: 'the sent hero'}).respond(200,
       	{name: 'the response hero'});
       $scope.super = {name: 'the new hero'};
-      $scope.createCharacter({name: 'the sent hero'}, null, heroes);
+      $scope.createCharacter({name: 'the sent hero'}, $scope.heroService, $scope.heroes);
       $httpBackend.flush();
       expect($scope.heroes.length).toBe(1);
-      expect($scope.super).toBe(null);
+      expect($scope.super.level).toBe(null);
+      expect($scope.super.name).toBe(null);
       expect($scope.heroes[0].name).toBe('the response hero');
     });
 
@@ -58,7 +59,7 @@ describe('CharactersController', () => {
       $scope.heroes.push(hero);
       expect($scope.heroes.indexOf(hero)).not.toBe(-1);
       $httpBackend.expectPUT('http://localhost:3000/api/heroes/1', hero).respond(200);
-      $scope.updateCharacer(hero);
+      $scope.updateCharacter(hero, $scope.heroService);
       $httpBackend.flush();
       expect($scope.heroes.length).toBe(1);
       expect($scope.heroes[0].editing).toBe(false);
@@ -72,7 +73,7 @@ describe('CharactersController', () => {
       expect($scope.heroes.length).toBe(1);
       expect($scope.heroes.indexOf(hero)).not.toBe(-1);
       $httpBackend.expectDELETE('http://localhost:3000/api/heroes/1').respond(200);
-      $scope.deleteCharacter(hero, null, heroes);
+      $scope.deleteCharacter(hero, $scope.heroService, $scope.heroes);
       $httpBackend.flush();
       expect($scope.heroes.length).toBe(0);
       expect($scope.heroes.indexOf(hero)).toBe(-1);
