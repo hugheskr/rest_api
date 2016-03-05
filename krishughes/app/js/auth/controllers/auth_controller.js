@@ -1,5 +1,5 @@
 module.exports = function(app) {
-  app.controller('authController', ['$scope', 'charactersAuth', '$location', function($scope, charactersAuth, $location) {
+  app.controller('authController', ['$scope', 'charactersAuth', function($scope, charactersAuth) {
     $scope.username = null;
 
     $scope.updateUsername = function() {
@@ -15,11 +15,15 @@ module.exports = function(app) {
     };
 
     $scope.signInView = function() {
-    	$location.path('/signin');
+    	charactersAuth.getSignInView();
     }
 
     $scope.signUpView = function() {
-    	$location.path('/signin');
+    	charactersAuth.getSignUpView();
+    }
+
+    $scope.homeView = function() {
+      charactersAuth.getHomeView();
     }
   }]);
 };

@@ -1,9 +1,18 @@
 module.exports = function(app) {
-  app.factory('charactersAuth', ['$http', '$window', function($http, $window) {
-  	var token;
+  app.factory('charactersAuth', ['$http', '$window', '$location', function($http, $window, $location) {
+    var token;
   	var user;
   	var auth = {
-  		createUser: function(user, cb) {
+  	  getSignInView: function() {
+        $location.path('/signin');
+      },
+      getSignUpView: function() {
+        $location.path('/signup');
+      },
+      getHomeView: function() {
+        $location.path('/home');
+      },
+      createUser: function(user, cb) {
   			cb = cb || function() {};
   			$http.post('http://localhost:3000/api/signup', user)
   			  .then(function(res) {

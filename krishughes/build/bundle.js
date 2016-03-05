@@ -31754,11 +31754,20 @@
 /***/ function(module, exports) {
 
 	module.exports = function(app) {
-	  app.factory('charactersAuth', ['$http', '$window', function($http, $window) {
-	  	var token;
+	  app.factory('charactersAuth', ['$http', '$window', '$location', function($http, $window, $location) {
+	    var token;
 	  	var user;
 	  	var auth = {
-	  		createUser: function(user, cb) {
+	  	  getSignInView: function() {
+	        $location.path('/signin');
+	      },
+	      getSignUpView: function() {
+	        $location.path('/signup');
+	      },
+	      getHomeView: function() {
+	        $location.path('/home');
+	      },
+	      createUser: function(user, cb) {
 	  			cb = cb || function() {};
 	  			$http.post('http://localhost:3000/api/signup', user)
 	  			  .then(function(res) {
@@ -31829,6 +31838,7 @@
 	module.exports = function(app) {
 		app.controller('SignupController', ['$scope', '$location', 'charactersAuth', function($scope, $location, auth) {
 	    $scope.signup = true;
+
 	    $scope.submit = function(user) {
 	      auth.createUser(user, function() {
 	      	$scope.updateUsername();
@@ -31844,9 +31854,10 @@
 /***/ function(module, exports) {
 
 	module.exports = function(app) {
-	  app.controller('SigninController', ['$scope', 'charactersAuth', '$location', function($scope, auth, $location) {
+	  app.controller('SigninController', ['$scope', 'charactersAuth', '$location', function($scope, charactersAuth, $location) {
+
 	    $scope.submit = function(user) {
-	      auth.signIn(user, function() {
+	      charactersAuth.signIn(user, function() {
 	      	$scope.updateUsername();
 	        $location.path('/home');
 	      });
@@ -31860,7 +31871,7 @@
 /***/ function(module, exports) {
 
 	module.exports = function(app) {
-	  app.controller('authController', ['$scope', 'charactersAuth', '$location', function($scope, charactersAuth, $location) {
+	  app.controller('authController', ['$scope', 'charactersAuth', function($scope, charactersAuth) {
 	    $scope.username = null;
 
 	    $scope.updateUsername = function() {
@@ -31876,11 +31887,15 @@
 	    };
 
 	    $scope.signInView = function() {
-	    	$location.path('/signin');
+	    	charactersAuth.getSignInView();
 	    }
 
 	    $scope.signUpView = function() {
-	    	$location.path('/signin');
+	    	charactersAuth.getSignUpView();
+	    }
+
+	    $scope.homeView = function() {
+	      charactersAuth.getHomeView();
 	    }
 	  }]);
 	};

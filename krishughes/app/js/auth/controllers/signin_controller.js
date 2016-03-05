@@ -1,7 +1,8 @@
 module.exports = function(app) {
-  app.controller('SigninController', ['$scope', 'charactersAuth', '$location', function($scope, auth, $location) {
+  app.controller('SigninController', ['$scope', 'charactersAuth', '$location', function($scope, charactersAuth, $location) {
+
     $scope.submit = function(user) {
-      auth.signIn(user, function() {
+      charactersAuth.signIn(user, function() {
       	$scope.updateUsername();
         $location.path('/home');
       });
