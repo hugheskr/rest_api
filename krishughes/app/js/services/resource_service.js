@@ -21,7 +21,6 @@ module.exports = exports = function(app) {
         .then(handleSuccess(callback), handleFailure(callback));
     };
 
-
     Resource.prototype.create = function(data, callback) {
       $http({
         method: 'POST',
@@ -34,7 +33,6 @@ module.exports = exports = function(app) {
         .then(handleSuccess(callback), handleFailure(callback));
     };
 
-
     Resource.prototype.delete = function(data, callback) {
       $http({
         method: 'DELETE',
@@ -45,7 +43,6 @@ module.exports = exports = function(app) {
       })
         .then(handleSuccess(callback), handleFailure(callback));
     };
-
 
     Resource.prototype.update = function(data, callback) {
       $http({
@@ -58,7 +55,6 @@ module.exports = exports = function(app) {
       })
       .then(handleSuccess(callback), handleFailure(callback));
     };
-
     return function(resourceName) {
       return new Resource(resourceName);
     };

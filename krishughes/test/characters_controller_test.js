@@ -44,8 +44,8 @@ describe('CharactersController', () => {
     it('should create a new hero', () => {
       $httpBackend.expectPOST('http://localhost:3000/api/heroes', {name: 'the sent hero'}).respond(200,
       	{name: 'the response hero'});
-      $scope.super = {name: 'the new hero'};
-      $scope.createCharacter({name: 'the sent hero'}, $scope.heroService, $scope.heroes);
+      $scope.super = {name: 'the new hero', level: 5};
+      $scope.createCharacter($scope.super, $scope.heroService, $scope.heroes);
       $httpBackend.flush();
       expect($scope.heroes.length).toBe(1);
       expect($scope.super.level).toBe(null);
