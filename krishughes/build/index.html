@@ -2,28 +2,28 @@
 <html lang="en">
 <head>
   <link rel="stylesheet" href="application.css">
-	<meta charset="UTF-8">
-	<title>Heroes and Villains</title>
+  <meta charset="UTF-8">
+  <title>Heroes and Villains</title>
 </head>
 <body data-ng-app="supersApp" ng-cloak>
-	<header>
+  <header>
     <h1>Heroes vs Villains</h1>
   </header>
-	<div data-ng-controller="authController" data-ng-init="updateUsername()">
-	  <nav class="greet">
-		  <p data-ng-if="!username">
+  <div data-ng-controller="authController" data-ng-init="updateUsername()">
+    <nav class="greet">
+      <p data-ng-if="!username">
         <a href data-ng-click='homeView()'>HOME</a>
         -
         <a href data-ng-click='signInView()'>SIGN IN</a>
         -
         <a href data-ng-click='signUpView()'>SIGN UP</a>
         - Please sign in to create, edit, or delete characters...
-		  </p>
-		  <p data-ng-if="username">
-		    Hello {{username}}!
-		    <a href data-ng-click="logOut()">LOG OUT</a>
-		  </p>
-	  </nav>
+      </p>
+      <p data-ng-if="username">
+        Hello {{username}}!
+      <a href data-ng-click="logOut()">LOG OUT</a>
+      </p>
+    </nav>
     <section data-ng-view></section>
   </div>
   <script src="bundle.js"></script>

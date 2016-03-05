@@ -3,9 +3,9 @@ module.exports = function(app) {
     $scope.username = null;
 
     $scope.updateUsername = function() {
-    	charactersAuth.getUsername(function(res) {
-    		$scope.username = res.data.username;
-    	});
+      charactersAuth.getUsername(function(res) {
+        $scope.username = res.data.username;
+      });
     };
 
     $scope.logOut = function() {
@@ -15,15 +15,15 @@ module.exports = function(app) {
     };
 
     $scope.signInView = function() {
-    	charactersAuth.getSignInView();
-    }
+      charactersAuth.getSignInView();
+    };
 
     $scope.signUpView = function() {
-    	charactersAuth.getSignUpView();
-    }
+      charactersAuth.getSignUpView();
+    };
 
     $scope.homeView = function() {
       charactersAuth.getHomeView();
-    }
+    };
   }]);
 };

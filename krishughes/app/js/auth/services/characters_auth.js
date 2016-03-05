@@ -1,9 +1,9 @@
 module.exports = function(app) {
   app.factory('charactersAuth', ['$http', '$window', '$location', function($http, $window, $location) {
     var token;
-  	var user;
-  	var auth = {
-  	  getSignInView: function() {
+    var user;
+    var auth = {
+      getSignInView: function() {
         $location.path('/signin');
       },
       getSignUpView: function() {
@@ -13,16 +13,16 @@ module.exports = function(app) {
         $location.path('/home');
       },
       createUser: function(user, cb) {
-  			cb = cb || function() {};
-  			$http.post('http://localhost:3000/api/signup', user)
-  			  .then(function(res) {
+        cb = cb || function() {};
+        $http.post('http://localhost:3000/api/signup', user)
+          .then(function(res) {
             token = $window.localStorage.token = res.data.token;
             cb(null);
-  			  }, function(res) {
+          }, function(res) {
             console.log(res);
             cb(res.err);
-  			  });
-  		},
+          });
+      },
       signIn: function(user, cb) {
         cb = cb || function() {};
         $http({
@@ -40,10 +40,10 @@ module.exports = function(app) {
           cb(res);
         });
       },
-  		getToken: function() {
-  			token = token || $window.localStorage.token;
-  			return token;
-  		},
+      getToken: function() {
+        token = token || $window.localStorage.token;
+        return token;
+      },
       logOut: function(cb) {
         $window.localStorage.token = null;
         token = null;

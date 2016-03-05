@@ -31552,7 +31552,7 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = function(app) {
-		__webpack_require__(6)(app);
+	  __webpack_require__(6)(app);
 	};
 
 
@@ -31561,22 +31561,22 @@
 /***/ function(module, exports) {
 
 	var handleSuccess = function(callback) {
-		return function(res) {
-			callback(null, res.data);
-		}
+	  return function(res) {
+	    callback(null, res.data);
+	  }
 	};
 
 	var handleFailure = function(callback) {
-		return function(res) {
+	  return function(res) {
 	    callback(res);
-		}
+	  }
 	};
 
 	module.exports = exports = function(app) {
-		app.factory('cfResource', ['$http', 'charactersAuth', function($http, charactersAuth) {
-			var Resource = function(resourceName) {
-				this.resourceName = resourceName;
-			};
+	  app.factory('cfResource', ['$http', 'charactersAuth', function($http, charactersAuth) {
+	    var Resource = function(resourceName) {
+	      this.resourceName = resourceName;
+	  };
 
 	    Resource.prototype.getAll = function(callback) {
 	      $http.get('http://localhost:3000/api' + this.resourceName)
@@ -31618,13 +31618,13 @@
 	          token: charactersAuth.getToken()
 	        }
 	      })
-	        .then(handleSuccess(callback), handleFailure(callback));
+	      .then(handleSuccess(callback), handleFailure(callback));
 	    };
 
-		  return function(resourceName) {
-				return new Resource(resourceName);
-			};
-		}]);
+	    return function(resourceName) {
+	      return new Resource(resourceName);
+	    };
+	  }]);
 	};
 
 
@@ -31633,7 +31633,7 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = function(app) {
-		__webpack_require__(8)(app);
+	  __webpack_require__(8)(app);
 	};
 
 
@@ -31742,10 +31742,10 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = function(app) {
-		__webpack_require__(11)(app);
-		__webpack_require__(12)(app);
-		__webpack_require__(13)(app);
-		__webpack_require__(14)(app);
+	  __webpack_require__(11)(app);
+	  __webpack_require__(12)(app);
+	  __webpack_require__(13)(app);
+	  __webpack_require__(14)(app);
 	};
 
 
@@ -31756,9 +31756,9 @@
 	module.exports = function(app) {
 	  app.factory('charactersAuth', ['$http', '$window', '$location', function($http, $window, $location) {
 	    var token;
-	  	var user;
-	  	var auth = {
-	  	  getSignInView: function() {
+	    var user;
+	    var auth = {
+	      getSignInView: function() {
 	        $location.path('/signin');
 	      },
 	      getSignUpView: function() {
@@ -31768,16 +31768,16 @@
 	        $location.path('/home');
 	      },
 	      createUser: function(user, cb) {
-	  			cb = cb || function() {};
-	  			$http.post('http://localhost:3000/api/signup', user)
-	  			  .then(function(res) {
+	        cb = cb || function() {};
+	        $http.post('http://localhost:3000/api/signup', user)
+	          .then(function(res) {
 	            token = $window.localStorage.token = res.data.token;
 	            cb(null);
-	  			  }, function(res) {
+	          }, function(res) {
 	            console.log(res);
 	            cb(res.err);
-	  			  });
-	  		},
+	          });
+	      },
 	      signIn: function(user, cb) {
 	        cb = cb || function() {};
 	        $http({
@@ -31795,10 +31795,10 @@
 	          cb(res);
 	        });
 	      },
-	  		getToken: function() {
-	  			token = token || $window.localStorage.token;
-	  			return token;
-	  		},
+	      getToken: function() {
+	        token = token || $window.localStorage.token;
+	        return token;
+	      },
 	      logOut: function(cb) {
 	        $window.localStorage.token = null;
 	        token = null;
@@ -31836,7 +31836,7 @@
 /***/ function(module, exports) {
 
 	module.exports = function(app) {
-		app.controller('SignupController', ['$scope', '$location', 'charactersAuth', function($scope, $location, auth) {
+	  app.controller('SignupController', ['$scope', '$location', 'charactersAuth', function($scope, $location, auth) {
 	    $scope.signup = true;
 
 	    $scope.submit = function(user) {
@@ -31845,7 +31845,7 @@
 	        $location.path('/home');
 	      });
 	    };
-		}]);
+	  }]);
 	}
 
 
@@ -31875,9 +31875,9 @@
 	    $scope.username = null;
 
 	    $scope.updateUsername = function() {
-	    	charactersAuth.getUsername(function(res) {
-	    		$scope.username = res.data.username;
-	    	});
+	      charactersAuth.getUsername(function(res) {
+	        $scope.username = res.data.username;
+	      });
 	    };
 
 	    $scope.logOut = function() {
@@ -31887,16 +31887,16 @@
 	    };
 
 	    $scope.signInView = function() {
-	    	charactersAuth.getSignInView();
-	    }
+	      charactersAuth.getSignInView();
+	    };
 
 	    $scope.signUpView = function() {
-	    	charactersAuth.getSignUpView();
-	    }
+	      charactersAuth.getSignUpView();
+	    };
 
 	    $scope.homeView = function() {
 	      charactersAuth.getHomeView();
-	    }
+	    };
 	  }]);
 	};
 

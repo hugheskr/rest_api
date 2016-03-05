@@ -1,5 +1,5 @@
 module.exports = function(app) {
-	app.controller('SignupController', ['$scope', '$location', 'charactersAuth', function($scope, $location, auth) {
+  app.controller('SignupController', ['$scope', '$location', 'charactersAuth', function($scope, $location, auth) {
     $scope.signup = true;
 
     $scope.submit = function(user) {
@@ -8,5 +8,5 @@ module.exports = function(app) {
         $location.path('/home');
       });
     };
-	}]);
+  }]);
 }

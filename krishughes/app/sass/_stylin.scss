@@ -25,6 +25,10 @@ $green: #4CAF50;
   }
 }
 
+h1 {
+  font-size: 35px;
+}
+
 header {
   height: 40px;
   width: 100%;
@@ -32,7 +36,6 @@ header {
   background-color: $blue;
   margin: 0;
   h1 {
-    font-size: 35px;
     height: 35px;
     margin-left: 10px;
     font-family: sans-serif;
