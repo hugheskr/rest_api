@@ -27,6 +27,8 @@
     "angular-route": "1.5.0",
     "babel-core": "^6.5.1",
     "babel-loader": "^6.2.2",
+    "chai": "3.5.0",
+    "chai-http": "2.0.1",
     "gulp": "^3.9.1",
     "gulp-minify-css": "1.2.4",
     "gulp-sass": "2.2.0",
