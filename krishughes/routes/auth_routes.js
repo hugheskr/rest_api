@@ -8,7 +8,7 @@ var authRouter = module.exports = exports = express.Router();
 
 authRouter.post('/signup', jsonParser, (req, res) => {
   var newUser = new User();
-  if(!((req.body.email || '').length && (req.body.password || '').length > 7)) {
+  if(!((req.body.email || '').length && (req.body.password || '').length > 1)) {
     return res.status(400).json({msg: 'Invalid username or password'});
   }
 

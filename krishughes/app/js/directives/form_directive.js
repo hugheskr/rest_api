@@ -1,18 +1,16 @@
 module.exports = function(app) {
-  app.directive('supersForm', function() {
+  app.directive('charactersForm', function() {
     return {
     	restrict: 'EAC',
       replace: true,
       transclude: true,
-      templateUrl: '/templates/supers/directives/form_directive.html',
+      templateUrl: '/templates/characters/directives/form_directive.html',
       scope: {
     	  buttonText: '@',
     	  super: '=',
     	  save: '&'
-    	}
-      // controller: function($scope) {
-      //   $scope.hero = $scope.hero || {};
-      // }
+    	},
+      controller: 'CharactersController'
     };
   });
 };
