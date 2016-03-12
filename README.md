@@ -1,18 +1,11 @@
-#REST API
-
-##To Submit this Assignment
-  * fork this repository
-  * write all of your code in a folder containing your name
-  * push to your repository
-  * submit a pull request to this repository
-  * submit a link to your PR in canvas
+#Heroes_vs_Villains
 
 ##Description
-Create a two rest resource rest API with Express that's backed by Mongo. I'm leaving this pretty open to interpretation. I want you to write this from scratch, don't just copy and paste code from class or previous projects. Add a feature of Mongoose that we didn't use class, such as data validation. Also, implement a non CRUD resource (meaning doesn't use the full GET/POST/PUT/PATCH/DELETE interface).
 
+-Heroes_vs_Villains is a single page app that allows users to add, edit, and remove their favorite heroes and villains from two separate lists/resources.
 
-##Rubic
-Use of Express: 3pts
-Use of Mongo: 3pts
-Tests: 2pts
-Project Organization: 2pts
+-Technologies used include Angular, JavaScript, HTML, CSS, Node.js, Express, and Mongoose/MongoDB. Testing was completed using Gulp, Mocha, and Chai.
+
+-I am the sole contributor to this repository. I used custom Angular directives, controllers, and services to make a dynamic front end which updates my MongoDB back end through an Express server.
+
+![Heroes_vs_Villains](/heroes_v_vill_screenshot.png?raw=true "Screenshot")
