@@ -21,13 +21,6 @@ app.use('/api', battleRouter);
 app.use('/api', authRouter);
 app.use('/api', userRouter);
 
-// app.listen(process.env.PORT || 3000, function() {
-// 	console.log('server up');
-// });
-app.use(express.static(__dirname + '/build'));
-
-const PORT = process.env.PORT || 3000;
-module.exports = exports = (port, cb) => {
-  return app.listen(port || PORT,
-    cb || (() => console.log('Server running on Port: ' + PORT)));
-};
+app.listen(process.env.PORT || 3000, function() {
+	console.log('server up');
+});
