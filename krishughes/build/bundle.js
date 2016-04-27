@@ -31648,6 +31648,8 @@
 	      $scope.heroService = Resource('/heroes');
 	      $scope.villainService = Resource('/villains');
 	      $scope.errors = [];
+	      var battleService = Resource('/battle');
+	      $scope.results = '';
 
 	      $scope.dismissError = function(err) {
 	        $scope.errors.splice($scope.errors.indexOf(err), 1);
@@ -31661,6 +31663,13 @@
 	          character.backup = angular.copy(character);
 	          character.editing = true;
 	        }
+	      };
+
+	      $scope.getBattle = function() {
+	        battleService.getAll(function(err, res) {
+	          if (err) return console.log(err);
+	          $scope.results = res;
+	        });
 	      };
 
 	      $scope.getAllCharacters = function(service, list) {

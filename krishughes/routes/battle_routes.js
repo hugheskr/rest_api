@@ -17,7 +17,6 @@ battleRouter.get('/battle', function(req, res) {
         ], function(err, data) {
           //if(err) return handleError(err, res);
           heroTotal = data[0].total;
-          console.log(heroTotal);
           resolve(heroTotal);
           });
     });
@@ -29,7 +28,6 @@ battleRouter.get('/battle', function(req, res) {
             ], function(err, data) {
                 if(err) return handleError(err, res);
                   var villainTotal = data[0].total;
-                  console.log(villainTotal);
                   if(heroTotal > villainTotal) {
                     res.send('Heroes win the Battle!');
                   } else if (villainTotal > heroTotal) {
