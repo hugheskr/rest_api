@@ -1,0 +1,59 @@
+{
+  "name": "krishughes",
+  "version": "1.0.0",
+  "engines": {
+    "node": "4.2.3",
+    "npm": "3.8.0"
+  },
+  "description": "An express server that uses MongoDB to server up two separate resources",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "start": "node index",
+    "test": "./node_modules/mocha/bin/mocha test/**/*.spec.js",
+    "postinstall": "gulp build:dev"
+  },
+  "author": "KrisHughes <kristopher_hughes@yahoo.com>",
+  "license": "MIT",
+  "dependencies": {
+    "bcrypt": "latest",
+    "body-parser": "1.14.2",
+    "express": "4.13.4",
+    "gulp": "3.9.1",
+    "gulp-minify-css": "1.2.4",
+    "gulp-sass": "2.2.0",
+    "gulp-sourcemaps": "1.6.0",
+    "jsonwebtoken": "5.5.4",
+    "mongoose": "4.3.6"
+  },
+  "devDependencies": {
+    "angular": "^1.5.0",
+    "angular-mocks": "^1.5.0",
+    "angular-route": "1.5.0",
+    "babel-core": "^6.5.1",
+    "babel-loader": "^6.2.2",
+    "chai": "3.5.0",
+    "chai-http": "2.0.1",
+    "gulp": "^3.9.1",
+    "gulp-eslint": "2.0.0",
+    "gulp-minify-css": "1.2.4",
+    "gulp-mocha": "2.2.0",
+    "gulp-ng-annotate": "2.0.0",
+    "gulp-sass": "2.2.0",
+    "gulp-sourcemaps": "1.6.0",
+    "gulp-uglify": "1.5.3",
+    "html-loader": "0.4.3",
+    "jasmine-core": "^2.4.1",
+    "karma": "^0.13.19",
+    "karma-chrome-launcher": "^0.2.2",
+    "karma-firefox-launcher": "^0.1.7",
+    "karma-jasmine": "^0.3.7",
+    "karma-phantomjs-launcher": "^1.0.0",
+    "phantomjs-prebuilt": "^2.1.4",
+    "through2": "2.0.1",
+    "webpack": "^1.12.13",
+    "webpack-stream": "^3.1.0"
+  }
+}
