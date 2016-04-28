@@ -12,7 +12,7 @@ const gulp = require('gulp'),
       maps = require('gulp-sourcemaps'),
       minifyCss = require('gulp-minify-css');
 
-gulp.task('webpack:prod', () => {
+gulp.task('webpack:dev', () => {
   gulp.src('app/js/client.js')
     .pipe(webpackStream({
       output: {
@@ -121,7 +121,7 @@ gulp.task('watch', function() {
   gulp.watch(files, ['lint']);
 });
 
-gulp.task('build:dev', ['html:dev','sass:dev', 'webpack:prod']);
+gulp.task('build:dev', ['html:dev','sass:dev', 'webpack:dev']);
 gulp.task('default', ['build:dev']);
 
 //gulp.task('default', ['mocha', 'lint', 'watch','build:dev']);
