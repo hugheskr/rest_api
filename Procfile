@@ -1,1 +1,1 @@
-web: node krishughes/index.js
+web: node index.js
