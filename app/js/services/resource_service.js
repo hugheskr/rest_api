@@ -17,14 +17,16 @@ module.exports = exports = function(app) {
   };
 
     Resource.prototype.getAll = function(callback) {
-      $http.get('http://localhost:3000/api' + this.resourceName)
+      $http.get('https://heroesvsvillains.herokuapp.com/api' + this.resourceName)
+      // $http.get('http://localhost:3000/api' + this.resourceName)
         .then(handleSuccess(callback), handleFailure(callback));
     };
 
     Resource.prototype.create = function(data, callback) {
       $http({
         method: 'POST',
-        url: 'http://localhost:3000/api' + this.resourceName,
+        url: 'https://heroesvsvillains.herokuapp.com/api' + this.resourceName,
+        // url: 'http://localhost:3000/api' + this.resourceName,
         data: data,
         headers: {
           token: charactersAuth.getToken()
@@ -36,7 +38,8 @@ module.exports = exports = function(app) {
     Resource.prototype.delete = function(data, callback) {
       $http({
         method: 'DELETE',
-        url: 'http://localhost:3000/api' + this.resourceName + '/' + data._id,
+        url: 'https://heroesvsvillains.herokuapp.com/api' + this.resourceName + '/' + data._id,
+        // url: 'http://localhost:3000/api' + this.resourceName + '/' + data._id,
         headers: {
           token: charactersAuth.getToken()
         }
@@ -47,7 +50,8 @@ module.exports = exports = function(app) {
     Resource.prototype.update = function(data, callback) {
       $http({
         method: 'PUT',
-        url: 'http://localhost:3000/api' + this.resourceName + '/' + data._id,
+        url: 'https://heroesvsvillains.herokuapp.com/api' + this.resourceName + '/' + data._id,
+        // url: 'http://localhost:3000/api' + this.resourceName + '/' + data._id,
         data: data,
         headers: {
           token: charactersAuth.getToken()

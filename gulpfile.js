@@ -12,41 +12,41 @@ const gulp = require('gulp'),
       maps = require('gulp-sourcemaps'),
       minifyCss = require('gulp-minify-css');
 
-gulp.task('webpack:dev', () => {
-  gulp.src('app/js/client.js')
-    .pipe(webpackStream({
-      output: {
-        filename: 'bundle.js'
-      },
-      module: {
-        loaders: [
-          {
-            test: /\.js$/,
-            exclude: /node_modules/,
-            loader: 'babel-loader'
-          }
-        ]
-      },
-      plugins: [
-        new webpack.DefinePlugin({
-          __BASEURL__: JSON.stringify('https://heroesvsvillains.herokuapp.com')
-        })
-      ],
-      devtool: 'source-map'
-    }))
-    .pipe(maps.init({ loadMaps: true }))
-    .pipe(through.obj(function(file, enc, cb) {
-      // Dont pipe through any source map files as it will be handled
-      // by gulp-sourcemaps
-      const isSourceMap = (/\.map$/).test(file.path);
-      if (!isSourceMap) this.push(file);
-      cb();
-    }))
-    .pipe(ngAnnotate())
-    .pipe(uglify())
-    .pipe(maps.write('.'))
-    .pipe(gulp.dest('build/'));
-});
+// gulp.task('webpack:dev', () => {
+//   gulp.src('app/js/client.js')
+//     .pipe(webpackStream({
+//       output: {
+//         filename: 'bundle.js'
+//       },
+//       module: {
+//         loaders: [
+//           {
+//             test: /\.js$/,
+//             exclude: /node_modules/,
+//             loader: 'babel-loader'
+//           }
+//         ]
+//       },
+//       plugins: [
+//         new webpack.DefinePlugin({
+//           __BASEURL__: JSON.stringify('https://heroesvsvillains.herokuapp.com')
+//         })
+//       ],
+//       devtool: 'source-map'
+//     }))
+//     .pipe(maps.init({ loadMaps: true }))
+//     .pipe(through.obj(function(file, enc, cb) {
+//       // Dont pipe through any source map files as it will be handled
+//       // by gulp-sourcemaps
+//       const isSourceMap = (/\.map$/).test(file.path);
+//       if (!isSourceMap) this.push(file);
+//       cb();
+//     }))
+//     .pipe(ngAnnotate())
+//     .pipe(uglify())
+//     .pipe(maps.write('.'))
+//     .pipe(gulp.dest('build/'));
+// });
 
 
 gulp.task('sass:dev', function() {
@@ -89,19 +89,19 @@ gulp.task('html:dev', function() {
     .pipe(gulp.dest(__dirname + '/build'));
 });
 
-// gulp.task('webpack:dev', function() {
-//   gulp.src(__dirname + '/app/js/*.js')
-//     .pipe(webpack({
-//       output: {
-//         filename: 'bundle.js'
-//       }
-//     }))
-//     .pipe(gulp.dest('build/'));
-// });
+gulp.task('webpack:dev', function() {
+  gulp.src(__dirname + '/app/js/*.js')
+    .pipe(webpackStream({
+      output: {
+        filename: 'bundle.js'
+      }
+    }))
+    .pipe(gulp.dest('build/'));
+});
 
 gulp.task('webpack:test', () => {
   gulp.src(__dirname + '/test/test_entry.js')
-    .pipe(webpack({
+    .pipe(webpackStream({
       module: {
         loaders: [
           {

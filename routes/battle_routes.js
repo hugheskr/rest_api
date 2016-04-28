@@ -6,8 +6,8 @@ var battleRouter = module.exports = exports = express.Router();
 var jwtAuth = require(__dirname + '/../lib/jwt_auth');
 
 battleRouter.get('/battle', function(req, res) {
-  var heroTotal;
-  var villainTotal;
+  var heroTotal = 0;
+  var villainTotal = 0;
   //sum hero levels
   var p1 = new Promise(
     function(resolve, reject) {
@@ -15,8 +15,8 @@ battleRouter.get('/battle', function(req, res) {
         [
           {$group: {_id: null, total: {$sum: "$level"}}}
         ], function(err, data) {
-          //if(err) return handleError(err, res);
-          heroTotal = data[0].total;
+          if(err) return handleError(err, res);
+          heroTotal = data[0].total || 0;
           resolve(heroTotal);
           });
     });
@@ -27,7 +27,7 @@ battleRouter.get('/battle', function(req, res) {
               {$group: {_id: null, total: {$sum: "$level"}}}
             ], function(err, data) {
                 if(err) return handleError(err, res);
-                  var villainTotal = data[0].total;
+                  villainTotal = data[0].total || 0;
                   if(heroTotal > villainTotal) {
                     res.send('Heroes win the Battle!');
                   } else if (villainTotal > heroTotal) {

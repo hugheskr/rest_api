@@ -14,7 +14,8 @@ module.exports = function(app) {
       },
       createUser: function(user, cb) {
         cb = cb || function() {};
-        $http.post('http://localhost:3000/api/signup', user)
+        $http.post('https://heroesvsvillains.herokuapp.com/api/signup', user)
+        // $http.post('http://localhost:3000/api/signup', user)
           .then(function(res) {
             token = $window.localStorage.token = res.data.token;
             cb(null);
@@ -27,7 +28,8 @@ module.exports = function(app) {
         cb = cb || function() {};
         $http({
           method: 'GET',
-          url: 'http://localhost:3000/api/signin',
+          url: 'https://heroesvsvillains.herokuapp.com/api/signin',
+          // url: 'http://localhost:3000/api/signin',
           headers: {
             'Authorization' : 'Basic ' + btoa((user.email + ':' + user.password))
           }
@@ -54,7 +56,8 @@ module.exports = function(app) {
         cb = cb || function(){};
         $http({
           method: 'GET',
-          url: 'http://localhost:3000/api/currentuser',
+          url: 'https://heroesvsvillains.herokuapp.com/api/currentuser',
+          // url: 'http://localhost:3000/api/currentuser',
           headers: {
             token: auth.getToken()
           }
