@@ -2,7 +2,7 @@
     <section class="errors" data-ng-if="errors.length">
       <h3>Errors</h3>
       <ul>
-        <li data-ng-repeat="error in errors">{{error}}
+        <li data-ng-repeat="error in errors track by $index">{{error}}
           <button
             class="deleteButton"
             data-ng-click="dismissError(error)"
