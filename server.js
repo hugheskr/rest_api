@@ -6,7 +6,7 @@ var villainsRouter = require(__dirname + '/routes/villains_routes');
 var battleRouter = require(__dirname + '/routes/battle_routes');
 var authRouter = require(__dirname + '/routes/auth_routes');
 var userRouter = require(__dirname + '/routes/user_routes');
-// mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://localhost/super_stream_dev');
+mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://localhost/super_stream_dev');
 
 // app.use((req, res, next) => {
 //   res.header('Access-Control-Allow-Origin', 'http://localhost:3000');
