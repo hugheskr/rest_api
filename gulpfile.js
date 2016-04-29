@@ -117,9 +117,9 @@ gulp.task('webpack:test', () => {
     .pipe(gulp.dest('test/'));
 });
 
-gulp.task('watch', function() {
-  gulp.watch(files, ['lint']);
-});
+// gulp.task('watch', function() {
+//   gulp.watch(files, ['lint']);
+// });
 
 gulp.task('build:dev', ['html:dev','sass:dev', 'webpack:dev']);
 gulp.task('default', ['build:dev']);
