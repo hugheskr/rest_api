@@ -9,7 +9,7 @@ module.exports = function(app) {
       $scope.heroService = Resource('/heroes');
       $scope.villainService = Resource('/villains');
       $scope.errors = [];
-      var battleService = Resource('/battle');
+      //var battleService = Resource('/battle');
       $scope.results = '';
 
       $scope.dismissError = function(err) {
@@ -26,12 +26,34 @@ module.exports = function(app) {
         }
       };
 
-      $scope.getBattle = function() {
-        battleService.getAll(function(err, res) {
-          if (err) return console.log(err);
-          $scope.results = res;
+      $scope.battle = function() {
+        var heroTotal = 0;
+        var villainTotal = 0;
+        angular.forEach($scope.villains, function(value, index){
+          villainTotal += value.level;
         });
+
+        angular.forEach($scope.heroes, function(value, index){
+          heroTotal += value.level;
+        });
+
+        console.log(heroTotal);
+        console.log(villainTotal);
+        if(heroTotal > villainTotal) {
+          $scope.results = 'Heroes win the Battle!';
+        } else if (villainTotal > heroTotal) {
+          $scope.results = 'Villains win the Battle!';
+        } else if (villainTotal === heroTotal) {
+          $scope.results = 'It was a tie!';
+        }
       };
+
+      // $scope.getBattle = function() {
+      //   battleService.getAll(function(err, res) {
+      //     if (err) return console.log(err);
+      //     $scope.results = res;
+      //   });
+      // };
 
       $scope.getAllCharacters = function(service, list) {
         service.getAll(function(err, res) {
