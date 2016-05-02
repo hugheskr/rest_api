@@ -26,6 +26,27 @@ module.exports = function(app) {
         }
       };
 
+      $scope.battle = function() {
+        var heroTotal = 0;
+        var villainTotal = 0;
+        angular.forEach($scope.villains, function(value, index){
+          villainTotal += value.level;
+        });
+
+        angular.forEach($scope.heroes, function(value, index){
+          heroTotal += value.level;
+        });
+
+        console.log(heroTotal);
+        console.log(villainTotal);
+        if(heroTotal > villainTotal) {
+          $scope.results = 'Heroes win the Battle!';
+        } else if (villainTotal > heroTotal) {
+          $scope.results = 'Villains win the Battle!';
+        } else if (villainTotal === heroTotal) {
+          $scope.results = 'It was a tie!';
+        }
+      };
       // $scope.getBattle = function() {
       //   battleService.getAll(function(err, res) {
       //     if (err) return console.log(err);
