@@ -9,7 +9,7 @@ module.exports = function(app) {
       $scope.heroService = Resource('/heroes');
       $scope.villainService = Resource('/villains');
       $scope.errors = [];
-      var battleService = Resource('/battle');
+      // var battleService = Resource('/battle');
       $scope.results = '';
 
       $scope.dismissError = function(err) {
