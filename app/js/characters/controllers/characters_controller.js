@@ -26,12 +26,12 @@ module.exports = function(app) {
         }
       };
 
-      $scope.getBattle = function() {
-        battleService.getAll(function(err, res) {
-          if (err) return console.log(err);
-          $scope.results = res;
-        });
-      };
+      // $scope.getBattle = function() {
+      //   battleService.getAll(function(err, res) {
+      //     if (err) return console.log(err);
+      //     $scope.results = res;
+      //   });
+      // };
 
       $scope.getAllCharacters = function(service, list) {
         service.getAll(function(err, res) {
